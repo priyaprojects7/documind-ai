@@ -2,17 +2,16 @@
 
 DocuMind AI is a local research-paper intelligence workspace for PDF ingestion, semantic search, evidence-grounded question answering, paper comparison, research-gap exploration, and retrieval evaluation.
 
-## Restore the source archive
+## Get the source code
 
-The complete project source is stored in five ordered Base64 parts in this repository. After cloning the repository, run:
+Download [documind-ai-source.tar.gz](./documind-ai-source.tar.gz) from this repository and extract it:
 
 ```bash
-python3 -c "import base64,pathlib; parts=sorted(pathlib.Path('.').glob('documind-ai-source.tar.gz.b64.*')); pathlib.Path('documind-ai-source.tar.gz').write_bytes(base64.b64decode(''.join(p.read_text() for p in parts)))"
 tar -xzf documind-ai-source.tar.gz
 cd documind-ai
 ```
 
-The archive contains the application, tests, documentation, Docker setup, notebooks, and GitHub Actions workflows.
+The source archive contains the application, tests, documentation, Docker setup, notebooks, and GitHub Actions workflows.
 
 ## Quick start
 
@@ -20,7 +19,7 @@ Requires Python 3.11+.
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
 streamlit run app/main.py
