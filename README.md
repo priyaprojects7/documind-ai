@@ -2,16 +2,17 @@
 
 DocuMind AI is a local research-paper intelligence workspace for PDF ingestion, semantic search, evidence-grounded question answering, paper comparison, research-gap exploration, and retrieval evaluation.
 
-## Source code
+## Restore the source archive
 
-The complete project source is packaged in [`documind-ai-source.tar.gz`](./documind-ai-source.tar.gz). It contains the application, tests, documentation, Docker setup, notebooks, and GitHub Actions workflows.
-
-Extract the source archive:
+The complete project source is stored in five ordered Base64 parts in this repository. After cloning the repository, run:
 
 ```bash
+python3 -c "import base64,pathlib; parts=sorted(pathlib.Path('.').glob('documind-ai-source.tar.gz.b64.*')); pathlib.Path('documind-ai-source.tar.gz').write_bytes(base64.b64decode(''.join(p.read_text() for p in parts)))"
 tar -xzf documind-ai-source.tar.gz
 cd documind-ai
 ```
+
+The archive contains the application, tests, documentation, Docker setup, notebooks, and GitHub Actions workflows.
 
 ## Quick start
 
@@ -19,7 +20,7 @@ Requires Python 3.11+.
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
 pip install -r requirements.txt
 cp .env.example .env
 streamlit run app/main.py
@@ -41,8 +42,8 @@ pytest -q
 ruff check app tests
 ```
 
-## Security
+## Security and limitations
 
-Never commit `.env`, API keys, private PDFs, or the local database. The archive includes `.env.example` only. Review paper licenses before sharing extracted content.
+Never commit `.env`, API keys, private PDFs, or the local database. The source archive includes `.env.example` only. Review paper licenses before sharing extracted content.
 
 Scanned PDFs require OCR before upload. Table and metadata extraction use lightweight heuristics. Research-gap and contradiction outputs are suggestions for manual review, not verified scientific conclusions.
