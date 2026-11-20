@@ -5,6 +5,7 @@ DocuMind AI is a local-first research-paper assistant. Streamlit provides the us
 ```text
 PDF upload -> PDF loader -> cleaner -> chunker -> embedding model -> SQLite
 Question -> query embedding -> similarity search -> reranker -> answer + citations
+Conversation -> chat_conversations + chat_messages -> reloadable Research Chat history
 ```
 
 The analysis modules provide transparent heuristics for paper comparison, possible claim contrasts, and candidate gap discovery. These are aids for researcher review, not substitutes for reading the papers.
@@ -12,3 +13,5 @@ The analysis modules provide transparent heuristics for paper comparison, possib
 ## Storage and boundaries
 
 SQLite is the default to make local setup simple. The repository interface isolates persistence so a PostgreSQL implementation can replace it later. Uploaded PDFs and the database are local runtime data and are excluded from Git.
+
+Chat history uses additive SQLite tables for conversations and messages. Each message stores its role, text, timestamp, and citation metadata. The current application is single-user/local-first; it does not provide authentication or tenant isolation.
