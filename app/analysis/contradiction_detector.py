@@ -8,11 +8,11 @@ def detect_contrasts(text_a: str, text_b: str) -> list[str]:
     b = [s.strip() for s in re.split(r"(?<=[.!?])\s+", text_b or "") if len(s.strip()) > 35]
     found = []
     for left in a:
-        l = left.lower()
+        left_lower = left.lower()
         for right in b:
-            r = right.lower()
-            shared = set(re.findall(r"[a-z]{5,}", l)) & set(re.findall(r"[a-z]{5,}", r))
-            opposing = any((x in l and y in r) or (y in l and x in r) for x,y in NEGATIONS.items())
+            right_lower = right.lower()
+            shared = set(re.findall(r"[a-z]{5,}", left_lower)) & set(re.findall(r"[a-z]{5,}", right_lower))
+            opposing = any((x in left_lower and y in right_lower) or (y in left_lower and x in right_lower) for x,y in NEGATIONS.items())
             if len(shared) >= 3 and opposing:
                 found.append(f"Potential contrast (review manually): A: {left[:260]} | B: {right[:260]}")
                 if len(found) >= 8: return found
