@@ -15,7 +15,7 @@ def render():
     right = st.selectbox("Paper B", [x for x in labels if x != left])
     if st.button("Compare claims", type="primary"):
         a, b = get_document(labels[left]), get_document(labels[right])
-        contrasts = detect_contrasts(a.get('text',''), b.get('text',''))
+        contrasts = detect_contrasts(a.get('full_text') or a.get('text',''), b.get('full_text') or b.get('text',''))
         if contrasts:
             for item in contrasts:
                 st.markdown(f"- {item}")
