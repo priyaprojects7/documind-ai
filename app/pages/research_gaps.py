@@ -19,5 +19,6 @@ def render():
         for gap in gaps:
             with st.expander(gap['title']):
                 st.write(gap['reason'])
-                st.caption("Evidence: " + "; ".join(gap['evidence']))
+                st.metric("Papers containing this theme", f"{gap['paper_count']} / {gap['corpus_size']}")
+                st.caption("Found in: " + "; ".join(gap['evidence']))
                 st.caption("Treat these as hypotheses to validate, not established research gaps.")
