@@ -11,7 +11,7 @@ def analyze_gaps(papers: list[dict], min_frequency: int = 2) -> list[dict]:
         return []
     counts, evidence = Counter(), defaultdict(list)
     for paper in papers:
-        source = (paper.get('abstract') or paper.get('text','')[:2500]).lower()
+        source = (paper.get('abstract') or paper.get('full_text') or paper.get('text') or '')[:2500].lower()
         terms = set(re.findall(r"[a-z][a-z-]{4,}", source)) - STOP
         for term in terms:
             counts[term] += 1
