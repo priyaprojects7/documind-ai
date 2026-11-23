@@ -11,6 +11,7 @@ Upload papers, ask questions across them, compare methods and findings, inspect 
 - Persistent local SQLite document, chunk, conversation, and message stores.
 - Multiple named Research Chat conversations with saved user questions, answers, and citations.
 - Similarity retrieval with lexical reranking.
+- Page-level provenance retained during chunking and displayed with retrieved citations.
 - Grounded Q&A with source labels and citation validation.
 - Paper comparison, candidate gap analysis, and potential claim-contrast detection.
 - Retrieval evaluation, Streamlit interface, tests, linting, and Docker setup.
