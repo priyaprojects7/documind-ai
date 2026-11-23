@@ -19,11 +19,21 @@ def render():
                 pages = load_pdf(raw)
                 full_text = "\n".join(p.text for p in pages)
                 meta = extract_metadata(full_text, upload.name)
-                chunks = chunk_text(full_text)
+                chunks = []
+                next_chunk_id = 0
+                for page in pages:
+                    page_chunks = chunk_text(
+                        page.text, page_number=page.page_number,
+                        start_chunk_id=next_chunk_id,
+                    )
+                    chunks.extend(page_chunks)
+                    next_chunk_id += len(page_chunks)
+                if not chunks:
+                    raise ValueError("No text chunks could be created from this PDF.")
                 doc_id = save_document(upload.name, meta, full_text, len(pages))
                 vectors = embed_texts([c.text for c in chunks])
                 add_document_chunks(doc_id, upload.name, chunks, vectors)
-                st.success(f"Indexed {upload.name}: {len(pages)} pages, {len(chunks)} chunks.")
+                st.success(f"Indexed {upload.name}: {len(pages)} pages, {len(chunks)} chunks. Source-page references are now retained.")
             except Exception as exc:
                 st.error(f"Could not process {upload.name}: {exc}")
     docs = list_documents()
