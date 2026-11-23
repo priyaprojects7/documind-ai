@@ -36,9 +36,13 @@ def init_db():
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
             "document_id INTEGER NOT NULL REFERENCES documents(id) ON DELETE CASCADE, "
             "filename TEXT NOT NULL, chunk_id INTEGER NOT NULL, content TEXT NOT NULL, "
-            "start_word INTEGER, end_word INTEGER, embedding TEXT NOT NULL, "
+            "start_word INTEGER, end_word INTEGER, page_number INTEGER, embedding TEXT NOT NULL, "
             "UNIQUE(document_id, chunk_id))"
         )
+        # Add page provenance to existing chunk tables without deleting indexed data.
+        chunk_columns = {row["name"] for row in conn.execute("PRAGMA table_info(chunks)")}
+        if "page_number" not in chunk_columns:
+            conn.execute("ALTER TABLE chunks ADD COLUMN page_number INTEGER")
         # Safe additive migration: existing DocuMind databases gain chat history tables.
         conn.execute(
             "CREATE TABLE IF NOT EXISTS chat_conversations ("
