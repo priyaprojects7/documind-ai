@@ -18,6 +18,7 @@ def _render_message(message):
                     st.markdown(
                         f"- **[{citation.get('label', 'Source')}]** "
                         f"{citation.get('filename', 'Unknown file')} · "
+                        f"page {citation.get('page_number') or 'not recorded'} · "
                         f"chunk {citation.get('chunk_id', '?')} · "
                         f"relevance {citation.get('score', 0):.3f}"
                     )
