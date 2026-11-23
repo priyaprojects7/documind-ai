@@ -12,7 +12,7 @@ class AnswerResult:
 
 
 def generate_answer(question: str, passages: list[dict]) -> AnswerResult:
-    sources = [{"label": f"S{i+1}", "filename": p['filename'], "chunk_id": p['chunk_id'], "score": p.get('score', 0), "content": p['content']} for i,p in enumerate(passages)]
+    sources = [{"label": f"S{i+1}", "filename": p['filename'], "chunk_id": p['chunk_id'], "page_number": p.get("page_number"), "score": p.get('score', 0), "content": p['content']} for i,p in enumerate(passages)]
     warnings = []
     answer = ""
     if settings.openai_api_key:
