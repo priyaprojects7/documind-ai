@@ -7,3 +7,10 @@ def test_chunk_overlap_and_order():
 
 def test_invalid_overlap():
     with pytest.raises(ValueError): chunk_text("a b", chunk_size=3, overlap=3)
+
+
+def test_page_number_and_chunk_ids_are_preserved():
+    chunks = chunk_text("one two three four five six", chunk_size=3, overlap=1,
+                        page_number=4, start_chunk_id=8)
+    assert [c.chunk_id for c in chunks] == [8, 9]
+    assert [c.page_number for c in chunks] == [4, 4]
