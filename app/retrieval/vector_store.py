@@ -11,8 +11,8 @@ def add_document_chunks(document_id: int, filename: str, chunks: list[TextChunk]
     with get_connection() as conn:
         conn.execute("DELETE FROM chunks WHERE document_id = ?", (document_id,))
         for chunk, vector in zip(chunks, vectors):
-            conn.execute("INSERT INTO chunks(document_id, filename, chunk_id, content, start_word, end_word, embedding) VALUES(?,?,?,?,?,?,?)",
-                         (document_id, filename, chunk.chunk_id, chunk.text, chunk.start_word, chunk.end_word, json.dumps(vector.tolist())))
+            conn.execute("INSERT INTO chunks(document_id, filename, chunk_id, content, start_word, end_word, page_number, embedding) VALUES(?,?,?,?,?,?,?,?)",
+                         (document_id, filename, chunk.chunk_id, chunk.text, chunk.start_word, chunk.end_word, chunk.page_number, json.dumps(vector.tolist())))
 
 
 def all_chunks():
